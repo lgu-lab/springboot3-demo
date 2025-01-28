@@ -1,0 +1,25 @@
+
+Include the required dependencies in pom.xml for Maven:
+
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>X.X.X</version> <!-- Check the latest version -->
+</dependency>
+
+NB: pringdoc: 2.7.x and 2.8.x is only compatible with SpringBoot 3.4.x 
+
+Once you include the dependency, Springdoc automatically exposes the following endpoints:
+
+    Swagger UI:
+        URL: http://localhost:8080/swagger-ui.html
+        A user-friendly interface to test your REST APIs.
+
+    OpenAPI JSON Specification:
+        URL: http://localhost:8080/v3/api-docs
+        The OpenAPI 3.0 specification in JSON format.
+
+    OpenAPI YAML Specification:
+        URL: http://localhost:8080/v3/api-docs.yaml
+       
+       
