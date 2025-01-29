@@ -1,0 +1,16 @@
+
+ Filtering 
+
+ Pagination 
+ 
+ 
+ GET /books/count
+ Response:
+ {
+  "count": 150
+ }
+ 
+ HEAD to check existence and get Metadata ????
+ HEAD /books
+ HEAD /books/{id}
+ 

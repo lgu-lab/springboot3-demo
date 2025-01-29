@@ -1,0 +1,54 @@
+Use BeanValidation for Request body validation 
+Rem: validation rules are automatically visible in the OpenApi/Swagger contract 
+When a bad value is detected by Spring 
+=> Http Status 400 (BadRequest)
+with response body:
+  {
+    "timestamp": "2025-01-29T17:18:19.416+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "path": "/api/v1/books"
+  }
+To get more detailed information such as the field name and specific error message 
+(e.g., which field failed validation and the exact validation error), 
+=> customize the error response using @ExceptionHandler in a global exception handler (@RestControllerAdvice).
+
+
+1) Add Spring Boot dependency to include Jakarta Validation (Bean Validation 3.0)
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+
+2) Define the Request DTO with Validation Constraints
+
+public class BookRequest {
+
+    @NotBlank(message = "Title is required")
+    private String title;
+
+    @NotBlank(message = "Author is required")
+    private String author;
+
+    @NotNull(message = "Price cannot be null")
+    @Min(value = 1, message = "Price must be at least 1")
+    private Double price;
+}
+
+
+3)  Validate the Request in the REST Controller with @Valid
+
+@RestController
+@RequestMapping("/books")
+public class BookController {
+
+    @PostMapping
+    public ResponseEntity<String> createBook(@Valid @RequestBody BookRequest request) {
+        return ResponseEntity.ok("Book created successfully: " + request.getTitle());
+    }
+}
+
+
+

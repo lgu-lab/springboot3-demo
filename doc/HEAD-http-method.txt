@@ -1,0 +1,43 @@
+
+Key Use Cases of HEAD in a REST API
+
+ - Resource Existence Check: 
+    You can check if a resource exists or if it has been modified without downloading it.
+    
+ - Metadata Retrieval: 
+    You can retrieve headers such as Content-Type, Content-Length, or Last-Modified to inspect the resource without fetching the full content.
+    
+ - Cache Validation: 
+    Use HEAD to check the cache-related headers (ETag, Last-Modified) before deciding to fetch the full resource with GET.
+    
+
+Can be useful for FILE resources :
+ - Request:
+    HEAD /files/sample.pdf HTTP/1.1
+ - Response:
+    HTTP/1.1 200 OK
+    Content-Type: application/pdf
+    Content-Length: 102400
+    Date: Wed, 29 Jan 2025 12:00:00 GMT
+    
+Examples for Book entity:
+
+1) Check if a Book Exists (without fetching its content)
+Status : 200 or 404
+
+2) Check for Resource Changes / Cache Validation
+
+  HEAD /books/{id} HTTP/1.1
+  Host: example.com
+  If-None-Match: "etag-value"
+
+Response (if the book hasn't changed):
+  HTTP/1.1 304 Not Modified
+
+Response (if the book has changed):
+  HTTP/1.1 200 OK
+  Content-Type: application/json
+  Content-Length: 256
+  ETag: "new-etag-value"
+  
+  
